@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import type { Memo, MemoBlock, MemoCategory, MemoLabel } from "./memos";
-import { supabase } from "./supabase";
+import { getSupabase } from "./supabase";
 
 // 메모는 Supabase의 memos 표에 저장하고, 작성 중인 임시 글만 이 브라우저(localStorage)에 둔다.
 const DRAFT_KEY = "memo-app:draft";
@@ -109,7 +109,7 @@ function setState(next: MemoState) {
 
 // 최신 메모가 앞에 온다. 고정한 메모는 화면에서 따로 모은다.
 async function fetchMemos() {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("memos")
     .select("*")
     .order("created_at", { ascending: false });
@@ -143,7 +143,7 @@ export function useMemos() {
 
 // 저장에 성공하면 새 메모의 id를, 실패하면 오류를 던진다.
 export async function saveMemo(draft: Draft) {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("memos")
     .insert({
       title: draft.title,
