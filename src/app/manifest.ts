@@ -4,6 +4,7 @@ import type { MetadataRoute } from "next";
 // 색은 디자인 토큰 surface/page(Light) 값이다.
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: "/",
     name: "메모",
     short_name: "메모",
     description: "메모 앱",
